@@ -1,0 +1,28 @@
+version: "2.4"
+
+services:
+  db:
+    image: "mariadb:latest"
+    volumes:
+      - /home/dan/Desktop/dev/dbcon/db:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_USER=dev_root
+      - MYSQL_DATABASE=dbcon_test_db
+      - MYSQL_PASSWORD=dev_root
+    ports:
+      - 34003:3306
+  adminer:
+    image: "adminer"
+    ports:
+      - 34002:8080
+    links:
+      - db
+  apache:
+    image: "php-pdo:latest"
+    volumes:
+      - /home/dan/Desktop/dev/dbcon/src:/var/www/html
+    links:
+      - db
+    ports:
+      - 34001:80

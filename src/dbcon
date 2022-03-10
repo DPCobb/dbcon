@@ -1,0 +1,46 @@
+#!/usr/bin/php
+<?php
+
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use App\Core\Application;
+use App\Core\Config;
+use App\Core\Command_Container;
+use App\IO\Output;
+use App\Events\Script_End;
+use App\Events\Version_Created;
+
+define('ROOT', getcwd());
+
+// Get any user set config values
+$config            = Config::load(__DIR__ . '/App/config.ini')->get();
+$command_container = new Command_Container($config, $argv);
+
+$app = Application::load($command_container);
+
+// Add Events
+$app->Event->subscribe('script-end', new Script_End);
+$app->Event->subscribe('new-version', new Version_Created);
+
+// Set Application level help command
+$app->set('help', function () use ($app) {
+    Output::file(__DIR__ . '/App/Output_Files/help.txt', ['version' => $app->config->version]);
+});
+
+// Aliases for create-version
+$app->alias(['cv', 'ver', 'create', 'nv'], "App\Commands\Create_Version\Default_Handler@handle");
+
+// Aliases for run push
+$app->alias(['push', 'up', 'ff'], "App\Commands\Run\Push@handle");
+
+// Aliases for run push-one
+$app->alias(['one', 'up-one', 'ff-one'], "App\Commands\Run\Push_One@handle");
+
+// Aliases for run revert
+$app->alias(['rev', 'down', 'rew'], "App\Commands\Run\Revert@handle");
+
+$app->run();

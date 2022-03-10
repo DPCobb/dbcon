@@ -1,0 +1,8 @@
+*/vendor
+composer.lock
+config.ini
+ignore.txt
+.php-cs-fixer.php
+db
+dbcon.json
+db_con

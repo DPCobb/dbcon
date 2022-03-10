@@ -1,0 +1,26 @@
+{
+    "name": "danc0/dcli",
+    "type": "project",
+    "description": "A lightweight PHP CLI application framework.",
+    "authors": [
+        {
+            "name": "Dan Cobb",
+            "email": "dcobb.dev@gmail.com"
+        }
+    ],
+    "license": "Unlicense",
+    "config": {
+        "vendor-dir": "src/vendor"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/App/"
+        }
+    },
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}

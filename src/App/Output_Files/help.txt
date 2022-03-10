@@ -1,0 +1,14 @@
+<success>
+
+A Demo Help Page using Output->parseFile
+
+<end>
+<warning>
+v{{version}}
+The above is a variable
+<end>
+
+<info>Commands Available<end>
+<message>--------------------------------------------------------<end>
+<message>init       <end><caption>Initializes this app into a project<end>
+<message>help       <end><caption>Shows this message<end>
